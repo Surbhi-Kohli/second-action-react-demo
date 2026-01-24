@@ -1,4 +1,4 @@
-name: Test Project
+name: Deploy Project
 on: push
 jobs: 
   tests:
@@ -29,7 +29,7 @@ jobs:
         run: npm test
       - name: Build Project
         run: npm run Build
-      - name: Deploy Project
+      - name: Deploy 
         run: echo "Deploying .."  
 
            
