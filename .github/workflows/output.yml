@@ -1,6 +1,6 @@
 name: Output Information
 on: workflow_dispatch
-job:
+jobs:
   info:
     runs-on: ubuntu-latest
     steps:
