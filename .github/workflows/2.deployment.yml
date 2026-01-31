@@ -1,4 +1,4 @@
-name: Deploy Project
+name: 2. Initial Deploy Project Demo
 on: [push, workflow_dispatch]
 jobs: 
   tests:
