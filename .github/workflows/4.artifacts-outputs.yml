@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  test:
+  test: # job1
     runs-on: ubuntu-latest
     steps:
       - name: Get code
@@ -15,7 +15,7 @@ jobs:
         run: npm run lint
       - name: Test code
         run: npm run test
-  build:
+  build: # job2
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -25,9 +25,21 @@ jobs:
         run: npm ci
       - name: Build website
         run: npm run build
-  deploy:
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-files
+          path: |
+                dist
+                package.json 
+  deploy: # job3
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
         run: echo "Deploying..."
+
+# In build job we run the build script which generates a dist folder , whose contents
+# need to be uploaded to some hosting server.Leaving these outputs on the runner 
+# machine is of no use to use, because once our workflow completes, the runner machine
+# will be shut down and these produced files will be lost
