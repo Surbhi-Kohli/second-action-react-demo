@@ -36,6 +36,12 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Get build Artifacts
+        uses: actions/download-artifact@v4 # action to download the artifacts uploaded by previous artifacts upload action
+        with:
+          name: dist-files # To download the artifacts that were uploaded in the previous build job, we use same name identifier
+      - name: Output contents
+        run: ls    
       - name: Deploy
         run: echo "Deploying..."
 
