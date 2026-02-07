@@ -18,6 +18,8 @@ jobs:
   build: # job2
     needs: test
     runs-on: ubuntu-latest
+    outputs: 
+      script-file: ${{steps.publish.outputs.my-script-file}}
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -32,6 +34,9 @@ jobs:
           path: |
                 dist
                 package.json 
+      - name: Publish JS files
+        id: publish
+        run: find dist/assets/*.js -type f -execdir echo 'my-script-file={}' >> $GITHUB_OUTPUT ';'         
   deploy: # job3
     needs: build
     runs-on: ubuntu-latest
@@ -42,6 +47,8 @@ jobs:
           name: dist-files # To download the artifacts that were uploaded in the previous build job, we use same name identifier
       - name: Output contents
         run: ls    
+      - name: Output filename
+        run: echo "${{needs.build.outputs.script-file }}"
       - name: Deploy
         run: echo "Deploying..."
 
