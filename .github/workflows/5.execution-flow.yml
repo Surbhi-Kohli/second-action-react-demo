@@ -82,6 +82,6 @@ jobs:
     steps:
       - name: Output info
         run:  |
-            echo  "echo "Workflow failed!"
+            echo  "Workflow failed!"
             echo "${{toJSON(github)}}"
 
